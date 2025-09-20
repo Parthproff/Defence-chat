@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import ThemeToggle from '../ui/ThemeToggle';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
@@ -23,10 +24,20 @@ const ProfilePage = () => {
             <span className="back-icon">←</span>
             Back to Chat
           </button>
+          <div className="header-actions">
+            <ThemeToggle />
+          </div>
           <h1>Profile Details</h1>
         </div>
 
         <div className="profile-content">
+          <div className="theme-toggle-section">
+            <div className="theme-setting">
+              <label>Theme</label>
+              <ThemeToggle />
+            </div>
+          </div>
+
           <div className="profile-section">
             <div className="profile-avatar">
               {user.photo ? (

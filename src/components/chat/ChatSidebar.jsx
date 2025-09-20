@@ -1,9 +1,37 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import ThemeToggle from '../ui/ThemeToggle';
 import './ChatSidebar.css';
 
-const ChatSidebar = ({ isOpen, onlineUsers, activeChat, onChatSelect, onClose }) => {
+const ChatSidebar = ({ isOpen, onlineUsers, activeChat, onChatSelect, onClose, user: passedUser, onProfileClick, onLogout }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('users'); // 'users' or 'groups'
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  // Use passed user or fallback to context user
+  const currentUser = passedUser || user;
+
+  // Check if it's mobile view
+  const isMobile = window.innerWidth <= 768;
+
+  const handleNewChat = () => {
+    // Handle new chat creation - functionality to be added later
+    console.log('Creating new chat...');
+    onClose(); // Close sidebar on mobile
+  };
+
+  const handleNewGroup = () => {
+    // Handle new group creation - functionality to be added later
+    console.log('Creating new group...');
+    onClose(); // Close sidebar on mobile
+  };
+
+  const handleProfileClick = () => {
+    navigate('/profile');
+    onClose(); // Close sidebar on mobile
+  };
 
   const filteredUsers = onlineUsers.filter(user =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -72,109 +100,147 @@ const ChatSidebar = ({ isOpen, onlineUsers, activeChat, onChatSelect, onClose })
     <>
       {isOpen && <div className="sidebar-overlay" onClick={onClose}></div>}
       <div className={`chat-sidebar ${isOpen ? 'open' : ''}`}>
-        <div className="sidebar-header">
-          <div className="search-container">
-            <input
-              type="text"
-              placeholder="Search users or groups..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
-            />
+        {/* Sidebar actions for all screens */}
+        <div className="sidebar-actions">
+          {/* Horizontal buttons row */}
+          <div className="horizontal-buttons">
+            <button 
+              className="sidebar-action-btn profile-btn" 
+              onClick={handleProfileClick}
+              title="Profile"
+            >
+              👤
+            </button>
+            <ThemeToggle showLabel={false} className="sidebar-theme-toggle" />
           </div>
           
-          <div className="sidebar-tabs">
-            <button
-              className={`tab-button ${activeTab === 'users' ? 'active' : ''}`}
-              onClick={() => setActiveTab('users')}
+          {/* Vertical buttons column */}
+          <div className="vertical-buttons">
+            <button 
+              className="sidebar-action-btn new-chat-btn" 
+              onClick={handleNewChat}
+              title="New Chat"
             >
-              Users ({onlineUsers.filter(u => u.status === 'online').length})
+              💬
             </button>
-            <button
-              className={`tab-button ${activeTab === 'groups' ? 'active' : ''}`}
-              onClick={() => setActiveTab('groups')}
+            <button 
+              className="sidebar-action-btn new-group-btn" 
+              onClick={handleNewGroup}
+              title="New Group"
             >
-              Groups ({mockGroups.length})
+              👥
             </button>
           </div>
         </div>
 
-        <div className="sidebar-content">
-          {activeTab === 'users' && (
-            <div className="users-list">
-              {filteredUsers.map(user => (
-                <div
-                  key={user.id}
-                  className={`user-item ${activeChat === user.id ? 'active' : ''}`}
-                  onClick={() => onChatSelect(user.id)}
+        {/* Show chat list only on desktop */}
+        {!isMobile && (
+          <>
+            <div className="sidebar-header">
+              <div className="search-container">
+                <input
+                  type="text"
+                  placeholder="Search users or groups..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="search-input"
+                />
+              </div>
+
+              <div className="sidebar-tabs">
+                <button
+                  className={`tab-button ${activeTab === 'users' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('users')}
                 >
-                  <div className="user-avatar">
-                    {user.avatar ? (
-                      <img src={user.avatar} alt={user.name} />
-                    ) : (
-                      <div className="avatar-placeholder">
-                        {user.name.charAt(0)}
+                  Users ({onlineUsers.filter(u => u.status === 'online').length})
+                </button>
+                <button
+                  className={`tab-button ${activeTab === 'groups' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('groups')}
+                >
+                  Groups ({mockGroups.length})
+                </button>
+              </div>
+            </div>
+
+            <div className="sidebar-content">
+              {activeTab === 'users' && (
+                <div className="users-list">
+                  {filteredUsers.map(user => (
+                    <div
+                      key={user.id}
+                      className={`user-item ${activeChat === user.id ? 'active' : ''}`}
+                      onClick={() => onChatSelect(user.id)}
+                    >
+                      <div className="user-avatar">
+                        {user.avatar ? (
+                          <img src={user.avatar} alt={user.name} />
+                        ) : (
+                          <div className="avatar-placeholder">
+                            {user.name.charAt(0)}
+                          </div>
+                        )}
+                        <div
+                          className="status-indicator"
+                          style={{ backgroundColor: getStatusColor(user.status) }}
+                        ></div>
                       </div>
-                    )}
-                    <div 
-                      className="status-indicator"
-                      style={{ backgroundColor: getStatusColor(user.status) }}
-                    ></div>
-                  </div>
-                  
-                  <div className="user-info">
-                    <div className="user-name">{user.name}</div>
-                    <div className="user-meta">
-                      <span className="user-department">{user.department}</span>
-                      <span className="user-status">
-                        {user.status === 'online' 
-                          ? getStatusText(user.status)
-                          : formatLastSeen(user.lastSeen)
-                        }
-                      </span>
+
+                      <div className="user-info">
+                        <div className="user-name">{user.name}</div>
+                        <div className="user-meta">
+                          <span className="user-department">{user.department}</span>
+                          <span className="user-status">
+                            {user.status === 'online'
+                              ? getStatusText(user.status)
+                              : formatLastSeen(user.lastSeen)
+                            }
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ))}
+
+                  {filteredUsers.length === 0 && (
+                    <div className="empty-state">
+                      <p>No users found</p>
+                    </div>
+                  )}
                 </div>
-              ))}
-              
-              {filteredUsers.length === 0 && (
-                <div className="empty-state">
-                  <p>No users found</p>
+              )}
+
+              {activeTab === 'groups' && (
+                <div className="groups-list">
+                  {mockGroups.map(group => (
+                    <div
+                      key={group.id}
+                      className={`group-item ${activeChat === group.id ? 'active' : ''}`}
+                      onClick={() => onChatSelect(group.id)}
+                    >
+                      <div className="group-avatar">
+                        <div className="group-icon">👥</div>
+                        {group.unread > 0 && (
+                          <div className="unread-badge">{group.unread}</div>
+                        )}
+                      </div>
+
+                      <div className="group-info">
+                        <div className="group-header">
+                          <span className="group-name">{group.name}</span>
+                          <span className="group-time">{group.lastMessageTime}</span>
+                        </div>
+                        <div className="group-meta">
+                          <span className="group-members">{group.members} members</span>
+                          <div className="group-last-message">{group.lastMessage}</div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
-          )}
-
-          {activeTab === 'groups' && (
-            <div className="groups-list">
-              {mockGroups.map(group => (
-                <div
-                  key={group.id}
-                  className={`group-item ${activeChat === group.id ? 'active' : ''}`}
-                  onClick={() => onChatSelect(group.id)}
-                >
-                  <div className="group-avatar">
-                    <div className="group-icon">👥</div>
-                    {group.unread > 0 && (
-                      <div className="unread-badge">{group.unread}</div>
-                    )}
-                  </div>
-                  
-                  <div className="group-info">
-                    <div className="group-header">
-                      <span className="group-name">{group.name}</span>
-                      <span className="group-time">{group.lastMessageTime}</span>
-                    </div>
-                    <div className="group-meta">
-                      <span className="group-members">{group.members} members</span>
-                      <div className="group-last-message">{group.lastMessage}</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+          </>
+        )}
       </div>
     </>
   );

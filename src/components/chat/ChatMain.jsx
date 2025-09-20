@@ -2,7 +2,16 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import './ChatMain.css';
 
-const ChatMain = ({ activeChat, onlineUsers, sidebarOpen }) => {
+const ChatMain = ({ 
+  onlineUsers, 
+  activeChat, 
+  setActiveChat, 
+  showChatList, 
+  setShowChatList, 
+  onChatSelect, 
+  onBack, 
+  hasBottomNav = true 
+}) => {
   const { user } = useAuth();
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState({});
@@ -11,6 +20,9 @@ const ChatMain = ({ activeChat, onlineUsers, sidebarOpen }) => {
   const messageInputRef = useRef(null);
 
   const activeChatUser = onlineUsers.find(u => u.id === activeChat);
+
+  // Check if it's mobile view
+  const isMobile = window.innerWidth <= 768;
 
   // Mock messages data
   useEffect(() => {
@@ -144,19 +156,73 @@ const ChatMain = ({ activeChat, onlineUsers, sidebarOpen }) => {
 
   const currentMessages = messages[activeChat] || [];
 
+  // Helper function to get status color
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'online': return '#27ae60';
+      case 'away': return '#f39c12';
+      case 'offline': return '#95a5a6';
+      default: return '#95a5a6';
+    }
+  };
+
+  // Helper function to format last seen time
+  const formatLastSeen = (lastSeen) => {
+    const now = new Date();
+    const diff = now - new Date(lastSeen);
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+
+    if (minutes < 1) return 'Just now';
+    if (minutes < 60) return `${minutes}m ago`;
+    if (hours < 24) return `${hours}h ago`;
+    return `${days}d ago`;
+  };
+
+  // Always show individual chat view when activeChat is set
   if (!activeChat) {
+    // Show the chat list when no active chat is selected
     return (
-      <div className={`chat-main ${sidebarOpen ? 'sidebar-open' : ''}`}>
-        <div className="no-chat-selected">
-          <div className="no-chat-content">
-            <div className="no-chat-icon">💬</div>
-            <h2>SecureChat</h2>
-            <p>Select a user or group to start a secure conversation</p>
-            <div className="security-features">
-              <div className="feature-item">🔐 End-to-end encryption</div>
-              <div className="feature-item">🛡️ Government-grade security</div>
-              <div className="feature-item">📝 Message logging for compliance</div>
-            </div>
+      <div className={`chat-main ${hasBottomNav ? 'with-bottom-nav' : ''}`}>
+        <div className="chat-list">
+          <div className="chat-list-header">
+            <h2>Chats</h2>
+          </div>
+          <div className="users-list">
+            {onlineUsers.map(user => (
+              <div
+                key={user.id}
+                className="user-item"
+                onClick={() => onChatSelect && onChatSelect(user.id)}
+              >
+                <div className="user-avatar">
+                  {user.avatar ? (
+                    <img src={user.avatar} alt={user.name} />
+                  ) : (
+                    <div className="avatar-placeholder">
+                      {user.name.charAt(0)}
+                    </div>
+                  )}
+                  <div
+                    className="status-indicator"
+                    style={{ backgroundColor: getStatusColor(user.status) }}
+                  ></div>
+                </div>
+                <div className="user-info">
+                  <div className="user-name">{user.name}</div>
+                  <div className="user-meta">
+                    <span className="user-department">{user.department}</span>
+                    <span className="user-status">
+                      {user.status === 'online'
+                        ? 'Online'
+                        : formatLastSeen(user.lastSeen)
+                      }
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -164,37 +230,7 @@ const ChatMain = ({ activeChat, onlineUsers, sidebarOpen }) => {
   }
 
   return (
-    <div className={`chat-main ${sidebarOpen ? 'sidebar-open' : ''}`}>
-      <div className="chat-header-bar">
-        <div className="chat-contact-info">
-          <div className="contact-avatar">
-            {activeChatUser?.avatar ? (
-              <img src={activeChatUser.avatar} alt={activeChatUser.name} />
-            ) : (
-              <div className="avatar-placeholder">
-                {activeChatUser?.name?.charAt(0) || '?'}
-              </div>
-            )}
-            <div 
-              className="status-dot"
-              style={{ backgroundColor: activeChatUser?.status === 'online' ? '#27ae60' : '#95a5a6' }}
-            ></div>
-          </div>
-          <div className="contact-details">
-            <h3>{activeChatUser?.name}</h3>
-            <span className="contact-status">
-              {activeChatUser?.status === 'online' ? 'Online' : 'Offline'} • {activeChatUser?.department}
-            </span>
-          </div>
-        </div>
-        
-        <div className="chat-actions">
-          <button className="action-btn" title="Video Call">📹</button>
-          <button className="action-btn" title="Voice Call">📞</button>
-          <button className="action-btn" title="More Options">⋯</button>
-        </div>
-      </div>
-
+    <div className={`chat-main ${hasBottomNav ? 'with-bottom-nav' : ''}`}>
       <div className="messages-container">
         <div className="messages-list">
           {currentMessages.map((msg) => (

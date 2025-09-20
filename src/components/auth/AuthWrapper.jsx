@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import IdVerification from './IdVerification';
 import OtpVerification from './OtpVerification';
 import PhotoVerification from './PhotoVerification';
+import ThemeToggle from '../ui/ThemeToggle';
 
 const AuthWrapper = () => {
   const { authStep, isAuthenticated } = useAuth();
@@ -18,16 +19,23 @@ const AuthWrapper = () => {
 
   console.log('AuthWrapper: User not authenticated, showing auth step:', authStep);
 
-  switch (authStep) {
-    case 'id-verification':
-      return <IdVerification />;
-    case 'otp-verification':
-      return <OtpVerification />;
-    case 'photo-verification':
-      return <PhotoVerification />;
-    default:
-      return <IdVerification />;
-  }
+  return (
+    <div className="auth-wrapper">
+      <ThemeToggle />
+      {(() => {
+        switch (authStep) {
+          case 'id-verification':
+            return <IdVerification />;
+          case 'otp-verification':
+            return <OtpVerification />;
+          case 'photo-verification':
+            return <PhotoVerification />;
+          default:
+            return <IdVerification />;
+        }
+      })()}
+    </div>
+  );
 };
 
 export default AuthWrapper;

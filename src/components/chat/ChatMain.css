@@ -1,10 +1,42 @@
+/* Mobile back button */
+.mobile-back-btn {
+  display: flex; /* Show by default since we're using bottom navigation */
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--text-primary, #333);
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  margin-right: 12px;
+  min-width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-back-btn:hover {
+  background-color: var(--bg-hover, #f0f0f0);
+}x
+
+.mobile-back-btn:active {
+  transform: scale(0.95);
+}
+
 .chat-main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #f8f9fa;
+  background: var(--bg-primary);
   min-width: 0;
-  transition: margin-left 0.3s ease;
+  height: 100%; /* Take full height of container */
+  transition: margin-left 0.3s ease, background-color 0.3s ease;
+}
+
+/* When bottom navigation is visible, account for it */
+.chat-main.with-bottom-nav {
+  height: calc(100% - 70px); /* Account for bottom nav (70px) */
 }
 
 .no-chat-selected {
@@ -13,6 +45,62 @@
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* Mobile welcome screen */
+.mobile-welcome {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  padding: 20px;
+}
+
+.mobile-welcome-content {
+  text-align: center;
+  max-width: 350px;
+  padding: 30px;
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
+}
+
+.welcome-icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+.mobile-welcome-content h2 {
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.mobile-welcome-content p {
+  color: var(--text-secondary);
+  margin-bottom: 25px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.welcome-features {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.welcome-features .feature-item {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  background: var(--bg-tertiary);
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
 }
 
 .no-chat-content {
@@ -28,14 +116,14 @@
 }
 
 .no-chat-content h2 {
-  color: #2c3e50;
+  color: var(--text-primary);
   margin-bottom: 10px;
   font-size: 28px;
   font-weight: 600;
 }
 
 .no-chat-content p {
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 30px;
   font-size: 16px;
   line-height: 1.5;
@@ -54,14 +142,62 @@
   font-weight: 500;
 }
 
+.mobile-welcome {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  padding: 20px;
+}
+
+.mobile-welcome-content {
+  text-align: center;
+  max-width: 300px;
+}
+
+.welcome-icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+.mobile-welcome-content h2 {
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.mobile-welcome-content p {
+  color: var(--text-secondary);
+  margin-bottom: 25px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.welcome-features {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.welcome-features .feature-item {
+  color: #27ae60;
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .chat-header-bar {
-  background: white;
-  border-bottom: 1px solid #e0e6ed;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
   padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px var(--shadow);
+  transition: background-color 0.3s ease;
 }
 
 .chat-contact-info {
@@ -103,19 +239,19 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  border: 2px solid white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border: 2px solid var(--bg-secondary);
+  box-shadow: 0 1px 3px var(--shadow);
 }
 
 .contact-details h3 {
   margin: 0 0 2px 0;
-  color: #2c3e50;
+  color: var(--text-primary);
   font-size: 16px;
   font-weight: 600;
 }
 
 .contact-status {
-  color: #666;
+  color: var(--text-secondary);
   font-size: 12px;
   text-transform: capitalize;
 }
@@ -129,7 +265,7 @@
   width: 35px;
   height: 35px;
   border: none;
-  background: #f8f9fa;
+  background: var(--bg-tertiary);
   border-radius: 50%;
   cursor: pointer;
   font-size: 16px;
@@ -137,10 +273,11 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  color: var(--text-secondary);
 }
 
 .action-btn:hover {
-  background: #e9ecef;
+  background: var(--bg-hover);
   transform: scale(1.05);
 }
 
@@ -148,6 +285,7 @@
   flex: 1;
   overflow: hidden;
   position: relative;
+  height: calc(100% - 70px); /* Only account for message input container */
 }
 
 .messages-list {
@@ -157,6 +295,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  scroll-behavior: smooth;
 }
 
 .message {
@@ -174,10 +313,10 @@
 }
 
 .message-content {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 18px;
   padding: 12px 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px var(--shadow);
   position: relative;
 }
 
@@ -187,8 +326,8 @@
 }
 
 .message.received .message-content {
-  background: white;
-  color: #2c3e50;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .message-header {
@@ -218,9 +357,14 @@
 }
 
 .message-input-container {
-  background: white;
-  border-top: 1px solid #e0e6ed;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
   padding: 15px 20px;
+  transition: background-color 0.3s ease;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .message-form {
@@ -233,15 +377,15 @@
   flex: 1;
   display: flex;
   align-items: center;
-  background: #f8f9fa;
+  background: var(--bg-tertiary);
   border-radius: 20px;
   padding: 8px 15px;
-  border: 1px solid #e0e6ed;
-  transition: border-color 0.3s ease;
+  border: 1px solid var(--border-color);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .input-wrapper:focus-within {
-  border-color: #3498db;
+  border-color: var(--accent-primary);
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
@@ -254,6 +398,7 @@
   padding: 4px;
   border-radius: 4px;
   transition: background-color 0.3s ease;
+  color: var(--text-secondary);
 }
 
 .attachment-btn:hover,
@@ -265,6 +410,7 @@
   flex: 1;
   border: none;
   background: transparent;
+  color: var(--text-primary);
   padding: 8px 12px;
   font-size: 14px;
   outline: none;
@@ -337,8 +483,22 @@
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
+  .mobile-back-btn {
+    display: flex !important;
+  }
+  
+  .chat-main {
+    height: calc(100vh - 70px); /* Only bottom nav on mobile */
+  }
+
+  .messages-container {
+    height: calc(100% - 120px); /* Account for smaller mobile elements */
+  }
+
   .chat-header-bar {
     padding: 12px 15px;
+    display: flex;
+    align-items: center;
   }
   
   .contact-avatar {
@@ -415,10 +575,160 @@
 }
 
 .messages-list::-webkit-scrollbar-thumb {
-  background: #c1c8cd;
+  background: var(--scrollbar-thumb);
   border-radius: 2px;
 }
 
 .messages-list::-webkit-scrollbar-thumb:hover {
-  background: #a8b2ba;
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Mobile back button */
+.mobile-back-btn {
+  display: flex; /* Show by default since we're using bottom navigation */
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--text-primary, #333);
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  margin-right: 12px;
+  min-width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-back-btn:hover {
+  background-color: var(--bg-hover, #f0f0f0);
+}
+
+.mobile-back-btn:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .mobile-back-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .chat-header-bar {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+  }
+}
+.mobile-chat-list {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+}
+
+.mobile-chat-header {
+  padding: 20px 16px 16px 16px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.mobile-chat-header h2 {
+  color: var(--text-primary);
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.mobile-users-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.mobile-user-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.mobile-user-item:hover {
+  background-color: var(--hover-bg);
+}
+
+.mobile-user-item:active {
+  background-color: var(--active-bg);
+}
+
+.mobile-user-avatar {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.mobile-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.mobile-user-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.mobile-status-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-primary);
+}
+
+.mobile-user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobile-user-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.mobile-user-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.mobile-user-department {
+  color: var(--text-secondary);
+  margin-right: 8px;
+}
+
+.mobile-user-status {
+  color: var(--text-tertiary);
+  font-size: 11px;
 }
