@@ -186,12 +186,27 @@ const PhotoVerification = () => {
 
             {error && <div className="error-message">{error}</div>}
 
+            {!uploadedImage && (
+              <div className="upload-hint">
+                <p>📸 Please upload your ID document photo to proceed with verification.</p>
+              </div>
+            )}
+
             <button 
               type="submit" 
-              className="verify-btn"
+              className={`verify-btn ${loading ? 'loading' : ''}`}
               disabled={loading || !uploadedImage}
             >
-              {loading ? 'Verifying Document...' : 'Complete Verification'}
+              {loading ? (
+                <span>
+                  <span className="loading-spinner">⟳</span>
+                  Verifying Document...
+                </span>
+              ) : uploadedImage ? (
+                'Complete Verification'
+              ) : (
+                'Upload Image to Continue'
+              )}
             </button>
           </form>
 

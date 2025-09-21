@@ -165,14 +165,38 @@ const IdVerification = () => {
 
           {errors.submit && <div className="error-message submit-error">{errors.submit}</div>}
 
-          <button 
-            type="submit" 
-            className="verify-btn"
-            disabled={loading}
-          >
-            {loading ? 'Verifying...' : 'Verify Identity'}
-          </button>
+          <div className="button-container">
+            <button 
+              type="submit" 
+              className={`verify-btn ${loading ? 'loading' : ''}`}
+              disabled={loading}
+            >
+              {loading ? (
+                <span>
+                  <span className="loading-spinner">⟳</span>
+                  Verifying...
+                </span>
+              ) : (
+                'Verify Identity'
+              )}
+            </button>
+          </div>
         </form>
+
+        <div className="form-progress">
+          <div className="progress-step active">
+            <span className="step-number">1</span>
+            <span className="step-label">Identity</span>
+          </div>
+          <div className="progress-step">
+            <span className="step-number">2</span>
+            <span className="step-label">OTP</span>
+          </div>
+          <div className="progress-step">
+            <span className="step-number">3</span>
+            <span className="step-label">Photo</span>
+          </div>
+        </div>
 
         <div className="security-notice">
           <p>🔒 This is a secure government platform. All activities are monitored and logged.</p>
