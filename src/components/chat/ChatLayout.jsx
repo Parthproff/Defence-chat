@@ -163,6 +163,16 @@ const ChatLayout = () => {
     setShowChatList(true); // Show chat list when switching tabs
   };
 
+  const handleLogoClick = () => {
+    // Navigate to home page - reset to default chat view
+    setActiveTab('chats');
+    setActiveChat(null);
+    setShowChatList(true);
+    setActiveGroup(null);
+    setShowGroupList(true);
+    setShowGroupMembers(false);
+  };
+
   const handleLogout = () => {
     logout();
     navigate('/auth');
@@ -494,7 +504,13 @@ const ChatLayout = () => {
       <div className="chat-header">
         <div className="header-left">
           <div className="header-title">
-            <img src="/govt-logo.png" alt="Logo" className="header-logo" />
+            <img 
+              src="/govt-logo.png" 
+              alt="Logo" 
+              className="header-logo clickable-logo" 
+              onClick={handleLogoClick}
+              title="Go to Home"
+            />
             <h1>Aegis</h1>
           </div>
         </div>

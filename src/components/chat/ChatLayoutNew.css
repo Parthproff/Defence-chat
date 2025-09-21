@@ -93,6 +93,20 @@
   object-fit: contain;
 }
 
+.clickable-logo {
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.clickable-logo:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.clickable-logo:active {
+  transform: scale(0.95);
+}
+
 .header-title h1 {
   font-size: 2rem; /* Increased from 1.75rem for better visibility */
   font-weight: 700; /* Increased from 600 for better prominence */
