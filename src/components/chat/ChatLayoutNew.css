@@ -1397,6 +1397,24 @@
   min-height: 0; /* allow proper scrolling */
   display: flex;
   flex-direction: column;
+  background-image: url('/chat-wallpaper.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.group-messages::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bg-primary, #ffffff);
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .group-messages .messages-list {
@@ -1407,6 +1425,9 @@
   flex-direction: column;
   gap: 12px;
   scroll-behavior: smooth;
+  background: transparent; /* Allow wallpaper to show through */
+  position: relative;
+  z-index: 1; /* Ensure messages appear above blurred background */
 }
 
 .group-messages .message {
@@ -1454,6 +1475,8 @@
   gap: 12px;
   align-items: center;
   flex-shrink: 0; /* Prevent shrinking */
+  position: relative;
+  z-index: 1; /* Ensure input appears above blurred background */
 }
 
 .group-message-input .input-wrapper {
@@ -1629,6 +1652,24 @@
 
   .group-messages {
     padding: 0.75rem;
+    background-image: url('/chat-wallpaper.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  .group-messages::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-primary, #ffffff);
+    opacity: 0.5;
+    z-index: 0;
+    pointer-events: none;
   }
 
   .group-message-input {
