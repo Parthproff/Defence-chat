@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import IdVerification from './IdVerification';
 import OtpVerification from './OtpVerification';
 import PhotoVerification from './PhotoVerification';
-import ThemeToggle from '../ui/ThemeToggle';
+import './AuthWrapper.css';
 
 const AuthWrapper = () => {
   const { authStep, isAuthenticated } = useAuth();
@@ -21,7 +21,6 @@ const AuthWrapper = () => {
 
   return (
     <div className="auth-wrapper">
-      <ThemeToggle />
       {(() => {
         switch (authStep) {
           case 'id-verification':

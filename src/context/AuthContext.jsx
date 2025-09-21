@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [authStep, setAuthStep] = useState('id-verification'); // id-verification, otp-verification, photo-verification, authenticated
+  const [showLoginPreloader, setShowLoginPreloader] = useState(false);
 
   useEffect(() => {
     // Check if user is already authenticated (from localStorage)
@@ -32,9 +33,16 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (userData) => {
-    setUser(userData);
-    setAuthStep('authenticated');
-    localStorage.setItem('authUser', JSON.stringify(userData));
+    // Show preloader when user successfully logs in
+    setShowLoginPreloader(true);
+    
+    // After preloader timeout, complete the login
+    setTimeout(() => {
+      setUser(userData);
+      setAuthStep('authenticated');
+      localStorage.setItem('authUser', JSON.stringify(userData));
+      setShowLoginPreloader(false);
+    }, 3500); // 3s preloader + 0.5s fade out
   };
 
   const logout = () => {
@@ -60,6 +68,7 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     nextAuthStep,
+    showLoginPreloader,
     isAuthenticated: !!user && authStep === 'authenticated'
   };
 

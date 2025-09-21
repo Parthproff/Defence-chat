@@ -19,6 +19,9 @@
   --scrollbar-track: #f1f3f4;
   --scrollbar-thumb: #c1c8cd;
   --scrollbar-thumb-hover: #a8b2ba;
+  /* Auth-specific background gradients */
+  --auth-bg-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  --auth-header-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
 
   color-scheme: light;
   color: var(--text-primary);
@@ -33,21 +36,24 @@
 
 /* Dark theme variables */
 [data-theme="dark"] {
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #2d2d2d;
-  --bg-tertiary: #404040;
-  --bg-hover: #363636;
-  --text-primary: rgba(255, 255, 255, 0.87);
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --text-muted: rgba(255, 255, 255, 0.5);
-  --border-color: #404040;
-  --shadow: rgba(0, 0, 0, 0.3);
-  --shadow-hover: rgba(0, 0, 0, 0.4);
-  --accent-primary: #4a9eff;
-  --accent-secondary: #3a8bdb;
-  --scrollbar-track: #2d2d2d;
-  --scrollbar-thumb: #555555;
-  --scrollbar-thumb-hover: #666666;
+  --bg-primary: #2a282f; /* Darker version of #37353E */
+  --bg-secondary: #35353f; /* Darker version of #44444E */
+  --bg-tertiary: #3d3b42; /* Darker tertiary background */
+  --bg-hover: #323039; /* Darker hover state */
+  --text-primary: rgba(255, 255, 255, 0.9); /* Slightly brighter white text */
+  --text-secondary: rgba(255, 255, 255, 0.75); /* Secondary text */
+  --text-muted: rgba(255, 255, 255, 0.55); /* Muted text */
+  --border-color: #434149; /* Darker border color */
+  --shadow: rgba(0, 0, 0, 0.5); /* Stronger shadows for darker theme */
+  --shadow-hover: rgba(0, 0, 0, 0.7); /* Stronger hover shadows */
+  --accent-primary: #4a9eff; /* Keeping blue accent for consistency */
+  --accent-secondary: #3a8bdb; /* Secondary accent */
+  --scrollbar-track: #2a282f; /* Same as primary background */
+  --scrollbar-thumb: #48464d; /* Darker thumb color */
+  --scrollbar-thumb-hover: #545259; /* Darker hover state for scrollbar */
+  /* Auth-specific dark theme backgrounds - only change main background, not header */
+  --auth-bg-gradient: linear-gradient(135deg, #1a1821 0%, #242230 100%);
+  /* Keep header gradient consistent - don't override --auth-header-gradient */
 
   color-scheme: dark;
   color: var(--text-primary);

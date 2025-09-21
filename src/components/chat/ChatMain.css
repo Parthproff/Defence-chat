@@ -30,13 +30,19 @@
   flex-direction: column;
   background: var(--bg-primary);
   min-width: 0;
-  height: 100%; /* Take full height of container */
+  height: 100vh; /* Take full viewport height */
+  position: relative; /* for fixed positioning context */
   transition: margin-left 0.3s ease, background-color 0.3s ease;
+  overflow: hidden; /* Prevent overflow issues */
+  /* Ensure no padding/margin affects positioning */
+  padding: 0;
+  margin: 0;
 }
 
 /* When bottom navigation is visible, account for it */
 .chat-main.with-bottom-nav {
-  height: calc(100% - 70px); /* Account for bottom nav (70px) */
+  height: calc(100% - 48px); /* Account for reduced bottom nav (48px) */
+  padding-bottom: 48px; /* Add padding to prevent overlap with bottom nav */
 }
 
 .no-chat-selected {
@@ -281,11 +287,38 @@
   transform: scale(1.05);
 }
 
+/* Font Awesome Video Call Icon Styling */
+.video-call-btn {
+  position: relative;
+}
+
+.video-call-btn .fa-video,
+.video-call-btn svg {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.video-call-btn:hover .fa-video,
+.video-call-btn:hover svg {
+  color: var(--accent-primary, #3498db);
+}
+
+/* Ensure Font Awesome icons are centered */
+.action-btn svg {
+  margin: auto;
+}
+
 .messages-container {
   flex: 1;
   overflow: hidden;
   position: relative;
-  height: calc(100% - 70px); /* Only account for message input container */
+  height: calc(100vh - 180px); /* Account for headers and sticky input at bottom */
+  min-height: 0; /* allow proper scrolling */
+  display: flex;
+  flex-direction: column;
 }
 
 .messages-list {
@@ -359,18 +392,34 @@
 .message-input-container {
   background: var(--bg-secondary);
   border-top: 1px solid var(--border-color);
-  padding: 15px 20px;
+  padding: 16px 20px; /* Increased padding for better form fit */
   transition: background-color 0.3s ease;
-  position: absolute;
-  bottom: 0;
+  position: fixed; /* Changed back to fixed for absolute bottom positioning */
+  bottom: 0 !important; /* Stick to absolute bottom of viewport */
   left: 0;
   right: 0;
+  height: 80px; /* Increased height for better form fit */
+  box-sizing: border-box;
+  z-index: 999; /* Lower than bottom nav to avoid overlap */
+  width: 100%; /* Ensure full width */
+  /* Enhanced stickiness properties */
+  -webkit-position: fixed; /* Safari support */
+  will-change: transform; /* Optimize for animations */
+  backface-visibility: hidden; /* Prevent flickering */
+  /* Ensure no gaps */
+  margin: 0 !important;
+  transform: translateZ(0); /* Force hardware acceleration */
+  /* Additional bottom sticking for mobile browsers */
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 
 .message-form {
   display: flex;
-  gap: 10px;
-  align-items: flex-end;
+  gap: 12px; /* Match group chat gap */
+  align-items: center; /* Changed from flex-end to center for better alignment */
+  height: 100%; /* Use full container height */
+  padding: 0; /* Remove any padding to better use container height */
 }
 
 .input-wrapper {
@@ -378,10 +427,11 @@
   display: flex;
   align-items: center;
   background: var(--bg-tertiary);
-  border-radius: 20px;
-  padding: 8px 15px;
+  border-radius: 24px; /* Increased border radius for larger container */
+  padding: 12px 18px; /* Increased padding for better fit */
   border: 1px solid var(--border-color);
   transition: border-color 0.3s ease, background-color 0.3s ease;
+  min-height: 44px; /* Ensure minimum height for touch targets */
 }
 
 .input-wrapper:focus-within {
@@ -393,12 +443,17 @@
 .emoji-btn {
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 18px; /* Increased for better touch targets */
   cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
+  padding: 6px; /* Increased padding */
+  border-radius: 6px;
   transition: background-color 0.3s ease;
   color: var(--text-secondary);
+  min-width: 32px; /* Ensure minimum touch target size */
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .attachment-btn:hover,
@@ -411,32 +466,42 @@
   border: none;
   background: transparent;
   color: var(--text-primary);
-  padding: 8px 12px;
   font-size: 14px;
   outline: none;
   resize: none;
+  font-family: inherit;
   min-height: 20px;
   max-height: 100px;
 }
 
-.send-btn {
-  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+.message-input::placeholder {
   color: white;
+}
+
+.send-btn {
+  background: var(--accent-primary);
   border: none;
-  width: 40px;
-  height: 40px;
   border-radius: 50%;
-  cursor: pointer;
-  font-size: 16px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
 }
 
 .send-btn:hover:not(:disabled) {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.send-btn:active {
+  transform: translateY(0);
 }
 
 .send-btn:disabled {
@@ -488,45 +553,72 @@
   }
   
   .chat-main {
-    height: calc(100vh - 70px); /* Only bottom nav on mobile */
+    height: 100vh; /* Full viewport height on mobile */
   }
 
   .messages-container {
-    height: calc(100% - 120px); /* Account for smaller mobile elements */
+    height: calc(100vh - 130px); /* Adjusted for sticky input at bottom on mobile */
+    min-height: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .message-input-container {
+    height: 72px; /* Increased from 50px to better fit form */
+    padding: 14px 16px; /* Increased padding for better form fit */
+    bottom: 0 !important; /* Stick to absolute bottom on mobile */
+    position: fixed; /* Changed to fixed for absolute bottom positioning */
+    -webkit-position: fixed; /* Safari support */
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    z-index: 999;
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin: 0 !important; /* Ensure no gaps */
+    will-change: transform; /* Optimize for mobile animations */
+    backface-visibility: hidden; /* Prevent mobile flickering */
+    margin: 0; /* Eliminate any margin gaps */
+    transform: translateZ(0); /* Force hardware acceleration */
+    /* Additional bottom sticking for mobile browsers */
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    bottom: 0 !important;
   }
 
   .chat-header-bar {
-    padding: 12px 15px;
+    padding: 10px 12px; /* Reduced from 12px 15px */
     display: flex;
     align-items: center;
   }
   
   .contact-avatar {
-    width: 40px;
-    height: 40px;
+    width: 36px; /* Reduced from 40px */
+    height: 36px; /* Reduced from 40px */
   }
   
   .avatar-placeholder {
-    font-size: 16px;
+    font-size: 14px; /* Reduced from 16px */
   }
   
   .contact-details h3 {
-    font-size: 14px;
+    font-size: 13px; /* Reduced from 14px */
   }
   
   .contact-status {
-    font-size: 11px;
+    font-size: 10px; /* Reduced from 11px */
   }
   
   .action-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 14px;
+    width: 28px; /* Reduced from 32px */
+    height: 28px; /* Reduced from 32px */
+    font-size: 12px; /* Reduced from 14px */
   }
   
   .messages-list {
-    padding: 15px 10px;
-    gap: 10px;
+    padding: 12px 8px; /* Reduced from 15px 10px */
+    gap: 8px; /* Reduced from 10px */
   }
   
   .message {
@@ -534,22 +626,22 @@
   }
   
   .message-content {
-    padding: 10px 14px;
-    border-radius: 16px;
+    padding: 8px 12px; /* Reduced from 10px 14px */
+    border-radius: 14px; /* Reduced from 16px */
   }
   
   .message-input-container {
-    padding: 12px 15px;
+    padding: 14px 16px; /* Increased for better form fit */
   }
   
   .input-wrapper {
-    padding: 6px 12px;
+    padding: 5px 10px; /* Reduced from 6px 12px */
   }
   
   .send-btn {
-    width: 36px;
-    height: 36px;
-    font-size: 14px;
+    width: 36px; /* Reduced from 42px */
+    height: 36px; /* Reduced from 42px */
+    font-size: 14px; /* Reduced from 16px */
   }
   
   .no-chat-icon {
@@ -706,6 +798,15 @@
 .mobile-user-info {
   flex: 1;
   min-width: 0;
+  background-color: var(--bg-secondary); /* Theme-specific background */
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-left: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.mobile-user-info:hover {
+  background-color: var(--bg-hover); /* Theme-specific hover state */
 }
 
 .mobile-user-name {
@@ -731,4 +832,33 @@
 .mobile-user-status {
   color: var(--text-tertiary);
   font-size: 11px;
+}
+
+/* Extra small mobile screens - more aggressive space saving */
+@media (max-width: 480px) {
+  .message-input-container {
+    height: 68px; /* Increased from 48px for better form fit */
+    padding: 12px 14px; /* Increased padding for better form fit */
+    bottom: 0 !important; /* Stick to absolute bottom on small mobile */
+    position: fixed; /* Changed to fixed for absolute bottom positioning */
+    -webkit-position: fixed; /* Safari support */
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    z-index: 999;
+    width: 100%;
+    left: 0;
+    right: 0;
+    will-change: transform; /* Optimize for small screen animations */
+    backface-visibility: hidden; /* Prevent flickering on small screens */
+    margin: 0 !important; /* Eliminate any margin gaps */
+    transform: translateZ(0); /* Force hardware acceleration */
+    /* Additional bottom sticking for small mobile browsers */
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    bottom: 0 !important;
+  }
+
+  .messages-container {
+    height: calc(100vh - 120px); /* Adjusted to account for sticky bottom input */
+  }
 }

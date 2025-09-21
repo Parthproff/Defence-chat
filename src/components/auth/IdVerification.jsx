@@ -55,7 +55,8 @@ const IdVerification = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  e.stopPropagation();
     const newErrors = validateForm();
 
     if (Object.keys(newErrors).length > 0) {

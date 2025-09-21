@@ -61,22 +61,16 @@ const PhotoVerification = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    e.stopPropagation();
+    if (loading) return;
     if (!uploadedImage) {
       setError('Please upload your ID document photo');
       return;
     }
-
     setLoading(true);
-    
     try {
-      // Simulate photo verification
       await new Promise(resolve => setTimeout(resolve, 3000));
-      
-      // Get temp user data
       const tempUserData = JSON.parse(localStorage.getItem('tempUserData') || '{}');
-      
-      // Create complete user object
       const userData = {
         id: Date.now().toString(),
         specialId: tempUserData.specialId,
@@ -88,13 +82,8 @@ const PhotoVerification = () => {
         verifiedAt: new Date().toISOString(),
         status: 'verified'
       };
-      
-      // Clean up temp data
       localStorage.removeItem('tempUserData');
-      
-      // Login user
       login(userData);
-      
     } catch (error) {
       setError('Photo verification failed. Please try again.');
     } finally {

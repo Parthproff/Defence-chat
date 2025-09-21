@@ -1,11 +1,17 @@
 .otp-verification-container {
   min-height: 100vh;
+  height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  justify-content: flex-start;
+  background: var(--auth-bg-gradient);
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  transition: background 0.3s ease;
 }
 
 .otp-verification-card {
@@ -14,23 +20,37 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 450px;
-  overflow: hidden;
+  overflow: initial;
+  margin: 20px auto;
+  display: block;
+  position: relative;
+  height: auto;
 }
 
 .auth-header {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  background: var(--auth-header-gradient);
   color: white;
   text-align: center;
-  padding: 30px 20px;
+  padding: 15px 20px;
+  transition: background 0.3s ease;
 }
 
 .govt-logo {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   background: white;
-  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.govt-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .auth-header h1 {
@@ -139,30 +159,40 @@
   background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
   color: white;
   border: none;
-  padding: 14px 20px;
+  padding: 16px 20px;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-bottom: 20px;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+  margin: 20px 0;
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+  position: relative;
+  z-index: 10;
+  display: block !important;
+  visibility: visible !important;
+  transform: none !important;
+  outline: none;
 }
 
 .verify-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+  background: linear-gradient(135deg, #229954 0%, #27ae60 100%);
+  box-shadow: 0 6px 16px rgba(39, 174, 96, 0.4);
+  transform: none !important;
 }
 
 .verify-btn:active {
-  transform: translateY(0);
+  background: linear-gradient(135deg, #1e8449 0%, #229954 100%);
+  box-shadow: 0 2px 8px rgba(39, 174, 96, 0.4);
+  transform: none !important;
 }
 
 .verify-btn:disabled {
-  opacity: 0.6;
+  opacity: 0.7;
   cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-  background: #95a5a6;
+  background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+  box-shadow: 0 2px 6px rgba(149, 165, 166, 0.3);
+  transform: none !important;
 }
 
 .otp-footer {
@@ -219,15 +249,30 @@
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .otp-verification-container {
-    padding: 10px;
+    padding: 0;
+    min-height: 100vh;
+    height: 100vh;
+    align-items: stretch;
+    justify-content: flex-start;
+    overflow-y: auto;
   }
   
   .otp-verification-card {
     max-width: 100%;
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
   
   .auth-header {
-    padding: 25px 15px;
+    padding: 15px 20px;
+    border-radius: 0;
+    flex-shrink: 0;
   }
   
   .auth-header h1 {
@@ -236,6 +281,10 @@
   
   .otp-verification-content {
     padding: 20px;
+    flex: 1;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
   }
   
   .otp-inputs {
@@ -249,12 +298,20 @@
   }
   
   .govt-logo {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
   }
   
   .verification-info h2 {
     font-size: 18px;
+  }
+  
+  .button-container {
+    background: var(--bg-secondary);
+    padding: 15px 20px;
+    margin: 0;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
   }
 }
 
@@ -267,5 +324,17 @@
     width: 35px;
     height: 35px;
     font-size: 14px;
+  }
+  
+  .otp-verification-content {
+    padding: 15px;
+  }
+  
+  .auth-header {
+    padding: 15px 15px;
+  }
+  
+  .button-container {
+    padding: 15px;
   }
 }

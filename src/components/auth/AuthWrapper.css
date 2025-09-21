@@ -1,0 +1,167 @@
+/* Global Auth Wrapper Styles */
+.auth-wrapper {
+  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Theme Toggle Positioning */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  padding: 8px 12px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+/* Common container fixes for all auth components */
+.id-verification-container,
+.otp-verification-container,
+.photo-verification-container {
+  min-height: 100vh !important;
+  height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding: 20px !important;
+  box-sizing: border-box !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Card adjustments */
+.id-verification-card,
+.otp-verification-card,
+.photo-verification-card {
+  width: 100% !important;
+  max-width: 500px !important;
+  margin: 20px auto !important;
+  position: relative !important;
+  overflow: visible !important;
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+/* Content area adjustments */
+.id-verification-form,
+.otp-verification-content,
+.photo-verification-content {
+  padding: 30px !important;
+  overflow: visible !important;
+  display: block !important;
+  position: relative !important;
+  height: auto !important;
+}
+
+/* Button container fixes */
+.button-container {
+  position: relative !important;
+  background: var(--bg-secondary, white) !important;
+  padding: 20px 30px !important;
+  margin: 20px -30px -30px -30px !important;
+  border-top: 1px solid var(--border-color, #e0e6ed) !important;
+  z-index: 100 !important;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Auth header adjustments */
+.auth-header {
+  position: relative !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .id-verification-container,
+  .otp-verification-container,
+  .photo-verification-container {
+    padding: 0 !important;
+    min-height: 100vh !important;
+    height: 100vh !important;
+    justify-content: flex-start !important;
+  }
+  
+  .id-verification-card,
+  .otp-verification-card,
+  .photo-verification-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  .id-verification-form,
+  .otp-verification-content,
+  .photo-verification-content {
+    padding: 20px !important;
+    flex: 1 !important;
+    overflow: visible !important;
+  }
+  
+  .button-container {
+    padding: 15px 20px !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    position: sticky !important;
+    bottom: 0 !important;
+  }
+  
+  .auth-header {
+    border-radius: 0 !important;
+    padding: 15px 20px !important;
+  }
+}
+
+@media (max-height: 700px) {
+  .id-verification-container,
+  .otp-verification-container,
+  .photo-verification-container {
+    padding: 20px !important;
+  }
+  
+  .auth-header {
+    padding: 15px !important;
+  }
+  
+  .govt-logo {
+    width: 35px !important;
+    height: 35px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+  
+  .govt-logo img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+  }
+  
+  .upload-area {
+    min-height: 120px !important;
+    padding: 20px 15px !important;
+  }
+}

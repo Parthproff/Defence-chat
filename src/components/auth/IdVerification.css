@@ -1,12 +1,17 @@
 .id-verification-container {
   min-height: 100vh;
+  height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  justify-content: flex-start;
+  background: var(--auth-bg-gradient);
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  transition: background 0.3s ease;
 }
 
 .id-verification-card {
@@ -17,23 +22,37 @@
   max-width: 500px;
   overflow: visible;
   transition: background-color 0.3s ease;
-  margin: auto;
+  margin: 20px auto;
+  display: block;
+  position: relative;
+  height: auto;
 }
 
 .auth-header {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  background: var(--auth-header-gradient);
   color: white;
   text-align: center;
-  padding: 30px 20px;
+  padding: 15px 20px;
+  position: relative;
+  transition: background 0.3s ease;
 }
 
 .govt-logo {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   background: white;
-  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.govt-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .auth-header h1 {
@@ -50,6 +69,10 @@
 
 .id-verification-form {
   padding: 30px;
+  overflow: visible;
+  display: block;
+  position: relative;
+  height: auto;
 }
 
 .id-verification-form h2 {
@@ -169,9 +192,13 @@
 }
 
 .button-container {
-  margin: 20px 0;
   position: relative;
-  z-index: 10;
+  background: var(--bg-secondary, white);
+  padding: 20px 30px;
+  margin: 20px -30px -30px -30px;
+  border-top: 1px solid var(--border-color, #e0e6ed);
+  z-index: 100;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .loading-spinner {
@@ -254,19 +281,30 @@
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .id-verification-container {
-    padding: 10px;
+    padding: 0;
     min-height: 100vh;
-    align-items: flex-start;
-    padding-top: 40px;
+    height: 100vh;
+    align-items: stretch;
+    justify-content: flex-start;
+    overflow-y: auto;
   }
   
   .id-verification-card {
     max-width: 100%;
-    margin: 0 auto 40px auto;
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
   
   .auth-header {
-    padding: 25px 15px;
+    padding: 15px 20px;
+    border-radius: 0;
+    flex-shrink: 0;
   }
   
   .auth-header h1 {
@@ -275,6 +313,10 @@
   
   .id-verification-form {
     padding: 20px;
+    flex: 1;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
   }
   
   .form-row {
@@ -283,30 +325,28 @@
   }
   
   .govt-logo {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
   }
   
   .verify-btn {
     padding: 18px 20px;
     font-size: 16px;
     margin: 25px 0;
-    position: sticky;
-    bottom: 20px;
     background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%) !important;
     display: block !important;
     visibility: visible !important;
     z-index: 999;
     box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4) !important;
+    border-radius: 8px;
   }
   
   .button-container {
-    position: sticky;
-    bottom: 10px;
     background: var(--bg-secondary);
-    padding: 10px 0;
-    margin: 20px -20px -20px -20px;
+    padding: 15px 20px;
+    margin: 0;
     border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
   }
   
   .form-progress {
@@ -325,15 +365,23 @@
   .verify-btn {
     font-size: 18px !important;
     padding: 20px !important;
-    border-radius: 10px !important;
+    border-radius: 8px !important;
     box-shadow: 0 6px 20px rgba(39, 174, 96, 0.5) !important;
   }
   
   .id-verification-container {
-    padding: 5px;
+    padding: 0;
   }
   
   .id-verification-form {
-    padding-bottom: 100px; /* Extra space for sticky button */
+    padding: 15px;
+  }
+  
+  .auth-header {
+    padding: 15px 15px;
+  }
+  
+  .button-container {
+    padding: 15px;
   }
 }

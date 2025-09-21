@@ -46,25 +46,18 @@ const OtpVerification = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    if (loading) return;
     const otpString = otp.join('');
-    
     if (otpString.length !== 6) {
       setError('Please enter the complete 6-digit OTP');
       return;
     }
-
     setLoading(true);
-    
+    setError('');
     try {
-      // Simulate OTP verification
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // For demo purposes, accept any 6-digit OTP
-      if (otpString.length === 6) {
-        nextAuthStep('photo-verification');
-      } else {
-        setError('Invalid OTP. Please try again.');
-      }
+      nextAuthStep('photo-verification');
     } catch (error) {
       setError('Verification failed. Please try again.');
     } finally {

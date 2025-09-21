@@ -1,0 +1,160 @@
+.preloader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.preloader-overlay.fade-out {
+  opacity: 0;
+}
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  animation: slideUpFromBottom 1.2s ease-out forwards;
+}
+
+.preloader-image-container {
+  margin-bottom: 2rem;
+  animation: slideUpFromBottom 1s ease-out forwards;
+}
+
+.preloader-image {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  animation: logoFloat 3s ease-in-out infinite alternate;
+}
+
+.preloader-text {
+  animation: slideUpFromBottom 1.2s ease-out 0.2s both;
+}
+
+.preloader-text h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: fantasy;
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+.preloader-text h3 {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin: 0;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: 'Segoe UI', sans-serif;
+  animation: textGlowSubtle 2s ease-in-out infinite alternate;
+  opacity: 0.9;
+}
+
+/* Keyframe animations */
+@keyframes slideUpFromBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(100vh);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes logoFloat {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(-10px) scale(1.02);
+  }
+}
+
+@keyframes textGlow {
+  0% {
+    filter: brightness(1);
+    text-shadow: 0 0 10px rgba(74, 158, 255, 0.4);
+  }
+  100% {
+    filter: brightness(1.2);
+    text-shadow: 0 0 20px rgba(74, 158, 255, 0.7);
+  }
+}
+
+@keyframes textGlowSubtle {
+  0% {
+    filter: brightness(1);
+    text-shadow: 0 0 5px rgba(74, 158, 255, 0.2);
+  }
+  100% {
+    filter: brightness(1.1);
+    text-shadow: 0 0 10px rgba(74, 158, 255, 0.4);
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .preloader-image {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .preloader-text h2 {
+    font-size: 1.5rem;
+  }
+  
+  .preloader-image-container {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .preloader-image {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .preloader-text h2 {
+    font-size: 1.25rem;
+  }
+  
+  .preloader-image-container {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Dark theme specific adjustments */
+[data-theme="dark"] .preloader-overlay {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .preloader-text h2 {
+  background: linear-gradient(45deg, #4a9eff, #6bb6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
